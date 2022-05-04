@@ -7,7 +7,11 @@
 
 import UIKit
 import CoreData
+import Then
+import SnapKit
+
 @main
+
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
