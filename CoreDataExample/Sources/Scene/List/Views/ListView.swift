@@ -81,10 +81,41 @@ extension ListView: UITableViewDataSource {
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+            
+            let managedContext = appDelegate.persistentContainer.viewContext
+                        
+            let profile = profiles[indexPath.row]
+            
+            managedContext.delete(profile)
+            profiles.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            saveContext()
+        }
+    }
+    
+    func saveContext() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        if managedContext.hasChanges {
+            do {
+                try managedContext.save()
+            } catch {
+                print(error)
+            }
+        }
+    }
 }
 
 // MARK: - UITableViewDelegate
 
 extension ListView: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        <#code#>
+    }
 }
