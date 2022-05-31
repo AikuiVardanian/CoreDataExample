@@ -11,8 +11,8 @@ final class ListTableViewCell: UITableViewCell {
     
     // MARK: - Configure cell
     
-    public func configureCell(with model: Profile) {
-        titleLabel.text = model.name
+    public func configureCell(with model: String) {
+        titleLabel.text = model
     }
     
     // MARK: - Properties

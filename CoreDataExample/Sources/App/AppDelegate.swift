@@ -20,7 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow()
         
         let startViewController = ListViewController()
-        window?.rootViewController = startViewController
+        let navigationController = UINavigationController(rootViewController: startViewController)
+        window?.rootViewController = navigationController
         
         window?.makeKeyAndVisible()
         
