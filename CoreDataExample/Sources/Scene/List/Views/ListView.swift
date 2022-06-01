@@ -10,6 +10,8 @@ import CoreData
 
 final class ListView: UIView {
     
+    let lcv = ListViewController()
+    
     // MARK: - Properties
     
     lazy var tableView = UITableView(frame: .zero).then {
@@ -116,6 +118,12 @@ extension ListView: UITableViewDataSource {
 
 extension ListView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        <#code#>
+        guard let profile = profiles[indexPath.row].value(forKey: "name") as? String else { return }
+        let destination = DetailView()
+        
+        destination.configureView(with: profile)
+        
+        UIApplication.shared.keyWindow?.rootViewController?.present(destination, animated: true)
+        //lcv.showViewController(destination: destination)
     }
 }

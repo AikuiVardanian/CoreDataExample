@@ -78,4 +78,8 @@ extension ListViewController {
             print("\(error), \(error.userInfo)")
         }
     }
+    
+    func showViewController(destination: UIViewController) {
+        navigationController?.pushViewController(destination, animated: true)
+    }
 }
