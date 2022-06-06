@@ -10,4 +10,5 @@ import Foundation
 protocol ListViewOutput {
     func addProfile(name: String)
     func getData()
+    func delete(profile: Profile)
 }

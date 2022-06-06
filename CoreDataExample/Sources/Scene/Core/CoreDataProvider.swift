@@ -11,6 +11,7 @@ import CoreData
 protocol CoreDataProviderType {
     func fetchData() -> [Profile]?
     func saveProfile(name: String)
+    func delete(profile: Profile)
 }
 
 final class CoreDataProvider: CoreDataProviderType {
@@ -26,6 +27,11 @@ final class CoreDataProvider: CoreDataProviderType {
         profile.birthday = nil
         profile.gender = nil
         
+        try? managedContext.save()
+    }
+    
+    func delete(profile: Profile) {
+        managedContext.delete(profile)
         try? managedContext.save()
     }
 }

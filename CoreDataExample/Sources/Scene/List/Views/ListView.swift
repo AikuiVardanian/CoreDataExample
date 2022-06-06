@@ -10,7 +10,7 @@ import CoreData
 
 final class ListView: UIView {
     
-    let lcv = ListViewController()
+    var listViewPresenter = ListViewController().listViewPresenter
     
     // MARK: - Properties
     
@@ -86,30 +86,11 @@ extension ListView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-            
-            let managedContext = appDelegate.persistentContainer.viewContext
-                        
             let profile = profiles[indexPath.row]
+            listViewPresenter.delete(profile: profile as! Profile)
             
-            managedContext.delete(profile)
             profiles.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-            saveContext()
-        }
-    }
-    
-    func saveContext() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        if managedContext.hasChanges {
-            do {
-                try managedContext.save()
-            } catch {
-                print(error)
-            }
         }
     }
 }

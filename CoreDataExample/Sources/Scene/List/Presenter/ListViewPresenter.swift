@@ -26,6 +26,10 @@ class ListViewPresenter: ListViewOutput {
         viewInput?.update(with: profiles)
     }
     
+    func delete(profile: Profile) {
+        dataProvider.delete(profile: profile)
+    }
+    
     func getData() {
         guard let profiles = dataProvider.fetchData() else { return }
         viewInput?.update(with: profiles)
