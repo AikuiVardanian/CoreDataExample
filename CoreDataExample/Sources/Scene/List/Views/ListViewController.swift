@@ -12,7 +12,8 @@ final class ListViewController: UIViewController {
     
     // MARK: - Properties
     private lazy var contentView = ListView()
-    var profiles: [NSManagedObject] = []
+    var listViewOutput: ListViewOutput?
+    var listViewPresenter = ListViewPresenter(dataProvider: CoreDataProvider())
     
     override func loadView() {
         view = contentView
@@ -20,8 +21,11 @@ final class ListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupNavigationBar()
+        listViewPresenter.setViewInput(viewInput: self)
+        listViewOutput = listViewPresenter
+        listViewOutput?.getData()
     }
 }
 
@@ -44,10 +48,11 @@ extension ListViewController {
         
         let saveAction = UIAlertAction(title: "Save", style: .default) { [unowned self] action in
             guard let textFields = alert.textFields?.first,
-                  let nameToSave = textFields.text else { return }
+                  let nameToSave = textFields.text,
+                  let presenter = listViewOutput else {return }
             
-            self.save(name: nameToSave)
-            contentView.reloadView()
+            presenter.addProfile(name: nameToSave)
+            
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
@@ -60,26 +65,14 @@ extension ListViewController {
         present(alert, animated: true)
     }
     
-    func save(name: String) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let entity = NSEntityDescription.entity(forEntityName: "Profile", in: managedContext)!
-        
-        let profile = NSManagedObject(entity: entity, insertInto: managedContext)
-        
-        profile.setValue(name, forKey: "name")
-        
-        do {
-            try managedContext.save()
-            profiles.append(profile)
-        } catch let error as NSError {
-            print("\(error), \(error.userInfo)")
-        }
-    }
-    
     func showViewController(destination: UIViewController) {
         navigationController?.pushViewController(destination, animated: true)
+    }
+}
+
+extension ListViewController: ListViewInput {
+    func update(with profiles: [Profile]) {
+        contentView.profiles = profiles
+        contentView.reloadView()
     }
 }
