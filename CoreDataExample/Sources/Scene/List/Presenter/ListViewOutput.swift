@@ -11,4 +11,5 @@ protocol ListViewOutput {
     func addProfile(name: String)
     func getData()
     func delete(profile: Profile)
+    func selectedProfile(index: Int)
 }

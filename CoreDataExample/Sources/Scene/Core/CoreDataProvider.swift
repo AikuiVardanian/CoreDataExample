@@ -12,6 +12,7 @@ protocol CoreDataProviderType {
     func fetchData() -> [Profile]?
     func saveProfile(name: String)
     func delete(profile: Profile)
+    func updateProfile()
 }
 
 final class CoreDataProvider: CoreDataProviderType {
@@ -32,6 +33,10 @@ final class CoreDataProvider: CoreDataProviderType {
     
     func delete(profile: Profile) {
         managedContext.delete(profile)
+        try? managedContext.save()
+    }
+    
+    func updateProfile() {
         try? managedContext.save()
     }
 }

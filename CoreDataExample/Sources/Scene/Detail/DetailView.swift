@@ -7,13 +7,9 @@
 
 import UIKit
 
-final class DetailView: UIViewController {
+final class DetailView: UIView {
     
-    func configureView(with name: String) {
-        self.name = name
-    }
-    
-    private var name: String?
+    public var profile: Profile?
     
     // MARK: - Properties
     private lazy var profilePictureImageView = UIImageView().then {
@@ -32,9 +28,9 @@ final class DetailView: UIViewController {
         $0.spacing = 32
     }
     
-    private lazy var nameStackView = createStackView(iconName: Images.person, description: name ?? "Name")
-    private lazy var birthdayStackView = createStackView(iconName: Images.birthday, description: "Birthday")
-    private lazy var genderStackView = createStackView(iconName: Images.person, description: "Gender")
+    private lazy var nameStackView = createStackView(iconName: Images.person, description: profile?.name ?? "Name")
+    private lazy var birthdayStackView = createStackView(iconName: Images.birthday, description: profile?.birthday ?? "Birthday")
+    private lazy var genderStackView = createStackView(iconName: Images.person, description: profile?.gender ?? "Gender")
     
     private lazy var saveButton = UIButton().then {
         $0.setTitle("Save", for: .normal)
@@ -97,18 +93,22 @@ final class DetailView: UIViewController {
     
     // MARK: - Lifecycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
         setupHierarchy()
         setupLayout()
         setupView()
     }
     
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
     // MARK: - Settings
     func setupHierarchy() {
-        view.addSubview(parentStackView)
-        view.addSubview(saveButton)
+        addSubview(parentStackView)
+        addSubview(saveButton)
         
         parentStackView.addArrangedSubview(profilePictureImageView)
         parentStackView.addArrangedSubview(personInfoStackView)
@@ -120,7 +120,7 @@ final class DetailView: UIViewController {
     
     func setupLayout() {
         parentStackView.snp.makeConstraints {
-            $0.centerX.equalTo(view)
+            $0.centerX.equalTo(self)
             $0.top.equalTo(88)
         }
         
@@ -129,15 +129,15 @@ final class DetailView: UIViewController {
         }
         
         saveButton.snp.makeConstraints {
-            $0.centerX.equalTo(view)
+            $0.centerX.equalTo(self)
             $0.bottom.equalTo(parentStackView).offset(88)
-            $0.width.equalTo(view).multipliedBy(0.4)
+            $0.width.equalTo(self).multipliedBy(0.4)
             $0.height.equalTo(44)
         }
     }
     
     func setupView() {
-        view.backgroundColor = .white
+        backgroundColor = .white
     }
 }
 

@@ -9,4 +9,5 @@ import Foundation
 
 protocol ListViewInput {
     func update(with profiles: [Profile])
+    func openDetailView(for profile: Profile)
 }

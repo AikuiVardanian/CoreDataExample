@@ -64,13 +64,19 @@ extension ListViewController {
         
         present(alert, animated: true)
     }
-    
-    func showViewController(destination: UIViewController) {
-        navigationController?.pushViewController(destination, animated: true)
-    }
 }
 
 extension ListViewController: ListViewInput {
+    func openDetailView(for profile: Profile) {
+
+        let detailView = DetailViewController()
+        let detailViewPresenter = DetailViewPresenter(dataProvider: CoreDataProvider())
+        
+        detailViewPresenter.profile = profile
+            
+        self.navigationController?.pushViewController(detailView, animated: true)
+    }
+    
     func update(with profiles: [Profile]) {
         contentView.profiles = profiles
         contentView.reloadView()

@@ -99,12 +99,7 @@ extension ListView: UITableViewDataSource {
 
 extension ListView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let profile = profiles[indexPath.row].value(forKey: "name") as? String else { return }
-        let destination = DetailView()
         
-        destination.configureView(with: profile)
-        
-        UIApplication.shared.keyWindow?.rootViewController?.present(destination, animated: true)
-        //lcv.showViewController(destination: destination)
+        listViewPresenter.selectedProfile(index: indexPath.row)
     }
 }

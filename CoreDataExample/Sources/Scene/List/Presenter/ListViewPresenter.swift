@@ -34,4 +34,10 @@ class ListViewPresenter: ListViewOutput {
         guard let profiles = dataProvider.fetchData() else { return }
         viewInput?.update(with: profiles)
     }
+    
+    func selectedProfile(index: Int) {
+        guard let profile = dataProvider.fetchData()?[index] else { return }
+
+        viewInput?.openDetailView(for: profile)
+    }
 }
