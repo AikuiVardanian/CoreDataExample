@@ -8,7 +8,8 @@
 import Foundation
 
 protocol DetailViewOutput {
-    func configureView(with profile: Profile)
-    func updateProfile(with profile: Profile)
+    var profile: Profile? { get set }
+    
     func reloadView()
+    func updateProfile()
 }

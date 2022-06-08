@@ -7,32 +7,34 @@
 
 import Foundation
 
-class DetailViewPresenter: DetailViewOutput {
-    
+class DetailViewPresenter: DetailViewOutput {    
     private var viewInput: DetailViewInput?
-    private var dataProvider: CoreDataProvider
+    private var dataProvider: CoreDataProvider?
     
     var profile: Profile?
     
-    init(dataProvider: CoreDataProvider) {
-        self.dataProvider = dataProvider
+    init(viewInput: DetailViewInput) {
+        self.viewInput = viewInput
+        dataProvider = CoreDataProvider()
     }
     
     func setViewInput(viewInput: DetailViewInput?) {
         self.viewInput = viewInput
     }
     
-    func configureView(with profile: Profile) {
-        viewInput?.update(with: profile)
-    }
-    
-    func updateProfile(with profile: Profile) {
-        dataProvider.updateProfile()
-    }
-    
     func reloadView() {
         guard let profile = profile else { return }
 
         viewInput?.update(with: profile)
+    }
+    
+    func updateProfile() {
+        guard let profile = profile, let viewInput = viewInput as? DetailViewController else { return }
+        
+        profile.name = viewInput.contentView.nameStackView.layer.name
+        profile.birthday = viewInput.contentView.birthdayStackView.layer.name
+        profile.gender = viewInput.contentView.genderStackView.layer.name
+        
+        dataProvider?.updateProfile()
     }
 }

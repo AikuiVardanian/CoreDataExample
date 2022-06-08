@@ -11,9 +11,8 @@ final class DetailViewController: UIViewController {
     
     // MARK: - Properties
     
-    private lazy var contentView = DetailView()
+    lazy var contentView = DetailView()
     var detailViewOutput: DetailViewOutput?
-    var detailViewPresenter = DetailViewPresenter(dataProvider: CoreDataProvider())
     
     // MARK: - Lifecycle
     
@@ -21,11 +20,13 @@ final class DetailViewController: UIViewController {
         view = contentView
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        detailViewOutput?.reloadView()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        detailViewPresenter.setViewInput(viewInput: self)
-        detailViewOutput = detailViewPresenter
+        
         detailViewOutput?.reloadView()
     }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		282DBE84285062EB004721FA /* ListViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282DBE83285062EB004721FA /* ListViewAdapter.swift */; };
 		286750BC2822386300D6B943 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286750BB2822386300D6B943 /* AppDelegate.swift */; };
 		286750C62822386300D6B943 /* CoreDataExample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 286750C42822386300D6B943 /* CoreDataExample.xcdatamodeld */; };
 		286750C82822386600D6B943 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 286750C72822386600D6B943 /* Assets.xcassets */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		282DBE83285062EB004721FA /* ListViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewAdapter.swift; sourceTree = "<group>"; };
 		286750B82822386300D6B943 /* CoreDataExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreDataExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		286750BB2822386300D6B943 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		286750C52822386300D6B943 /* CoreDataExample.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataExample.xcdatamodel; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				286750E32822750200D6B943 /* Cell */,
 				286750DF28223B2900D6B943 /* ListViewController.swift */,
 				286750DD28223B1900D6B943 /* ListView.swift */,
+				282DBE83285062EB004721FA /* ListViewAdapter.swift */,
 				286F544B28474A600013B854 /* ListViewInput.swift */,
 			);
 			path = Views;
@@ -349,6 +352,7 @@
 			files = (
 				286F544F284DD5000013B854 /* DetailViewController.swift in Sources */,
 				286750DE28223B1900D6B943 /* ListView.swift in Sources */,
+				282DBE84285062EB004721FA /* ListViewAdapter.swift in Sources */,
 				286F5448284749CF0013B854 /* ListViewPresenter.swift in Sources */,
 				286F543C284616FB0013B854 /* DetailView.swift in Sources */,
 				286750BC2822386300D6B943 /* AppDelegate.swift in Sources */,

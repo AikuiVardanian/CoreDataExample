@@ -19,10 +19,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow()
         
-        let startViewController = ListViewController()
-        let navigationController = UINavigationController(rootViewController: startViewController)
-        window?.rootViewController = navigationController
+        let listViewController = ListViewController()
+        let listPresenter = ListViewPresenter(viewInput: listViewController)
+        listViewController.listViewPresenter = listPresenter
         
+        let listNavigationController = UINavigationController(rootViewController: listViewController)
+        
+        window?.rootViewController = listNavigationController
         window?.makeKeyAndVisible()
         
         return true

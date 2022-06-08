@@ -10,8 +10,13 @@ import UIKit
 final class DetailView: UIView {
     
     public var profile: Profile?
+    var presenter = DetailViewPresenter(viewInput: DetailViewController())
     
     // MARK: - Properties
+    private lazy var contentScrollView = UIScrollView().then {
+        $0.backgroundColor = .white
+    }
+    
     private lazy var profilePictureImageView = UIImageView().then {
         $0.image = UIImage(systemName: "person.circle")
     }
@@ -28,15 +33,16 @@ final class DetailView: UIView {
         $0.spacing = 32
     }
     
-    private lazy var nameStackView = createStackView(iconName: Images.person, description: profile?.name ?? "Name")
-    private lazy var birthdayStackView = createStackView(iconName: Images.birthday, description: profile?.birthday ?? "Birthday")
-    private lazy var genderStackView = createStackView(iconName: Images.person, description: profile?.gender ?? "Gender")
+    lazy var nameStackView = createStackView(iconName: Images.person, description: profile?.name ?? "Name")
+    lazy var birthdayStackView = createStackView(iconName: Images.birthday, description: profile?.birthday ?? "Birthday")
+    lazy var genderStackView = createStackView(iconName: Images.person, description: profile?.gender ?? "Gender")
     
     private lazy var saveButton = UIButton().then {
         $0.setTitle("Save", for: .normal)
         $0.tintColor = .white
         $0.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
         $0.backgroundColor = .systemBlue
+        $0.addTarget(self, action: #selector(saveProfile), for: .touchUpInside)
     }
     
     // MARK: - func createStackView
@@ -107,8 +113,10 @@ final class DetailView: UIView {
     
     // MARK: - Settings
     func setupHierarchy() {
-        addSubview(parentStackView)
-        addSubview(saveButton)
+        addSubview(contentScrollView)
+        
+        contentScrollView.addSubview(parentStackView)
+        contentScrollView.addSubview(saveButton)
         
         parentStackView.addArrangedSubview(profilePictureImageView)
         parentStackView.addArrangedSubview(personInfoStackView)
@@ -119,6 +127,10 @@ final class DetailView: UIView {
     }
     
     func setupLayout() {
+        contentScrollView.snp.makeConstraints {
+            $0.left.top.right.bottom.equalTo(self)
+        }
+        
         parentStackView.snp.makeConstraints {
             $0.centerX.equalTo(self)
             $0.top.equalTo(88)
@@ -138,6 +150,10 @@ final class DetailView: UIView {
     
     func setupView() {
         backgroundColor = .white
+    }
+    
+    @objc func saveProfile() {
+        
     }
 }
 

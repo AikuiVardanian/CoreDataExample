@@ -10,34 +10,30 @@ import Foundation
 class ListViewPresenter: ListViewOutput {
     
     private var viewInput: ListViewInput?
-    private var dataProvider: CoreDataProvider
+    private var dataProvider: CoreDataProvider?
     
-    init(dataProvider: CoreDataProvider) {
-        self.dataProvider = dataProvider
-    }
-    
-    func setViewInput(viewInput: ListViewInput?) {
+    init(viewInput: ListViewInput) {
         self.viewInput = viewInput
+        self.dataProvider = CoreDataProvider()
     }
     
     func addProfile(name: String) {
-        dataProvider.saveProfile(name: name)
-        guard let profiles = dataProvider.fetchData() else { return }
+        dataProvider?.saveProfile(name: name)
+        guard let profiles = dataProvider?.fetchData() else { return }
         viewInput?.update(with: profiles)
     }
     
     func delete(profile: Profile) {
-        dataProvider.delete(profile: profile)
+        dataProvider?.delete(profile: profile)
     }
     
     func getData() {
-        guard let profiles = dataProvider.fetchData() else { return }
+        guard let profiles = dataProvider?.fetchData() else { return }
         viewInput?.update(with: profiles)
     }
     
     func selectedProfile(index: Int) {
-        guard let profile = dataProvider.fetchData()?[index] else { return }
-
+        guard let profile = dataProvider?.fetchData()?[index] else { return }
         viewInput?.openDetailView(for: profile)
     }
 }

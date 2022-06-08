@@ -12,8 +12,8 @@ final class ListViewController: UIViewController {
     
     // MARK: - Properties
     private lazy var contentView = ListView()
-    var listViewOutput: ListViewOutput?
-    var listViewPresenter = ListViewPresenter(dataProvider: CoreDataProvider())
+    var listViewPresenter: ListViewOutput?
+    var viewAdapter: ListViewAdapter?
     
     override func loadView() {
         view = contentView
@@ -21,11 +21,13 @@ final class ListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupNavigationBar()
-        listViewPresenter.setViewInput(viewInput: self)
-        listViewOutput = listViewPresenter
-        listViewOutput?.getData()
+        
+        viewAdapter = contentView.viewAdapter
+        viewAdapter?.delegate = self
+    
+        listViewPresenter?.getData()
     }
 }
 
@@ -49,7 +51,7 @@ extension ListViewController {
         let saveAction = UIAlertAction(title: "Save", style: .default) { [unowned self] action in
             guard let textFields = alert.textFields?.first,
                   let nameToSave = textFields.text,
-                  let presenter = listViewOutput else {return }
+                  let presenter = listViewPresenter else {return }
             
             presenter.addProfile(name: nameToSave)
             
@@ -66,19 +68,34 @@ extension ListViewController {
     }
 }
 
+// MARK: - ViewInput
+
 extension ListViewController: ListViewInput {
     func openDetailView(for profile: Profile) {
+        let detailViewController = DetailViewController()
+        detailViewController.detailViewOutput?.profile = profile
 
-        let detailView = DetailViewController()
-        let detailViewPresenter = DetailViewPresenter(dataProvider: CoreDataProvider())
-        
-        detailViewPresenter.profile = profile
-            
-        self.navigationController?.pushViewController(detailView, animated: true)
+        navigationController?.pushViewController(detailViewController, animated: true)
     }
     
     func update(with profiles: [Profile]) {
-        contentView.profiles = profiles
-        contentView.reloadView()
+
+        viewAdapter?.profiles = profiles
+        contentView.tableView.reloadData()
+    }
+}
+
+// MARK: - ListViewDelegate
+
+extension ListViewController: ListViewAdapterDelegate {
+    func didTap(index: Int) {
+
+        listViewPresenter?.selectedProfile(index: index)
+    }
+    
+    func removed(profile: Profile) {
+
+        listViewPresenter?.delete(profile: profile)
+        contentView.tableView.reloadData()
     }
 }
