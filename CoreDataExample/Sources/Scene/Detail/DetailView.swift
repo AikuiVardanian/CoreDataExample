@@ -8,7 +8,7 @@
 import UIKit
 
 protocol DetailViewDelegate {
-    func saveProfile()
+    func updateProfile()
 }
 
 final class DetailView: UIView {
@@ -46,7 +46,7 @@ final class DetailView: UIView {
         $0.tintColor = .white
         $0.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
         $0.backgroundColor = .systemBlue
-        $0.addTarget(self, action: #selector(saveProfile), for: .touchUpInside)
+        $0.addTarget(self, action: #selector(updateProfile), for: .touchUpInside)
     }
     
     // MARK: - func createStackView
@@ -182,8 +182,8 @@ final class DetailView: UIView {
         }
     }
     
-    @objc func saveProfile() {
-        delegate?.saveProfile()
+    @objc func updateProfile() {
+        delegate?.updateProfile()
     }
 }
 

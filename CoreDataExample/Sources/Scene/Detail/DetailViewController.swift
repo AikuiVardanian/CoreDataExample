@@ -24,6 +24,7 @@ final class DetailViewController: UIViewController {
         super.viewDidLoad()
         
         detailViewOutput?.viewWasLoaded()
+        contentView.delegate = self
     }
 }
 
@@ -39,7 +40,7 @@ extension DetailViewController: DetailViewInput {
 // MARK: - ViewDelegate
 
 extension DetailViewController: DetailViewDelegate {
-    func saveProfile() {
+    func updateProfile() {
         detailViewOutput?.updateProfileInDataBase()
     }
 }
