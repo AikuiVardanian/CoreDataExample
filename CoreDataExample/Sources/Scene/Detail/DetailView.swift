@@ -77,6 +77,8 @@ final class DetailView: UIView {
             $0.spacing = 4
         }
         
+        descriptionTextField.delegate = self
+        
         topStackView.addArrangedSubview(iconImageView)
         topStackView.addArrangedSubview(descriptionTextField)
         
@@ -155,6 +157,8 @@ final class DetailView: UIView {
         backgroundColor = .white
     }
     
+    // MARK: - Update view
+    
     func reloadView() {
         if let topStackView = nameStackView.arrangedSubviews.first as? UIStackView,
            let nameTextField = topStackView.arrangedSubviews.last as? UITextField,
@@ -193,5 +197,31 @@ extension DetailView {
     enum Images {
         static let person = "person.fill"
         static let birthday = "calendar"
+    }
+}
+
+// MARK: - TextField Delegate
+
+extension DetailView: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let topStackView = nameStackView.arrangedSubviews.first as? UIStackView,
+           let nameTextField = topStackView.arrangedSubviews.last as? UITextField {
+            
+            nameTextField.endEditing(true)
+        }
+        
+        if let topStackView = birthdayStackView.arrangedSubviews.first as? UIStackView,
+           let birthdayTextField = topStackView.arrangedSubviews.last as? UITextField {
+            
+            birthdayTextField.endEditing(true)
+        }
+        
+        if let topStackView = genderStackView.arrangedSubviews.first as? UIStackView,
+           let genderTextField = topStackView.arrangedSubviews.last as? UITextField {
+            
+            genderTextField.endEditing(true)
+        }
+        
+        return true
     }
 }
