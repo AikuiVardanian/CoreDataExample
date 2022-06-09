@@ -28,13 +28,13 @@ final class DetailView: UIView {
     private lazy var parentStackView = UIStackView().then {
         $0.axis = .vertical
         $0.alignment = .center
-        $0.spacing = 44
+        $0.spacing = Metrics.parentStackViewSpacing
     }
     
     private lazy var personInfoStackView = UIStackView().then {
         $0.axis = .vertical
         $0.alignment = .top
-        $0.spacing = 32
+        $0.spacing = Metrics.profileInfoStackViewSpacing
     }
     
     lazy var nameStackView = createStackView(iconName: Images.person, description: "Name")
@@ -44,7 +44,7 @@ final class DetailView: UIView {
     private lazy var saveButton = UIButton().then {
         $0.setTitle("Save", for: .normal)
         $0.tintColor = .white
-        $0.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
+        $0.titleLabel?.font = .systemFont(ofSize: Metrics.saveButtonFontSize, weight: .bold)
         $0.backgroundColor = .systemBlue
         $0.addTarget(self, action: #selector(updateProfile), for: .touchUpInside)
     }
@@ -53,7 +53,7 @@ final class DetailView: UIView {
     
     private func createStackView(iconName: String, description: String) -> UIStackView {
         let descriptionTextField = UITextField().then {
-            $0.font = .systemFont(ofSize: 20)
+            $0.font = .systemFont(ofSize: Metrics.descriptionTextFiledFontSize)
             $0.placeholder = description
         }
         
@@ -68,13 +68,13 @@ final class DetailView: UIView {
         let topStackView = UIStackView().then {
             $0.axis = .horizontal
             $0.alignment = .center
-            $0.spacing = 16
+            $0.spacing = Metrics.topStackViewSpacing
         }
         
         let stackView = UIStackView().then {
             $0.axis = .vertical
             $0.alignment = .center
-            $0.spacing = 4
+            $0.spacing = Metrics.itemStackViewSpacing
         }
         
         descriptionTextField.delegate = self
@@ -86,17 +86,17 @@ final class DetailView: UIView {
         stackView.addArrangedSubview(liner)
         
         iconImageView.snp.makeConstraints {
-            $0.height.width.equalTo(44)
+            $0.height.width.equalTo(Metrics.iconImageSize)
         }
         
         descriptionTextField.snp.makeConstraints {
-            $0.width.equalToSuperview().multipliedBy(0.8)
+            $0.width.equalToSuperview().multipliedBy(Metrics.descriptionTextFiledWidthMult)
         }
         
         liner.snp.makeConstraints {
             $0.left.equalTo(topStackView)
             $0.right.equalTo(topStackView)
-            $0.height.equalTo(2)
+            $0.height.equalTo(Metrics.separatorHeight)
         }
         
         return stackView
@@ -138,18 +138,18 @@ final class DetailView: UIView {
         
         parentStackView.snp.makeConstraints {
             $0.centerX.equalTo(self)
-            $0.top.equalTo(88)
+            $0.top.equalTo(Metrics.parentStackViewTopOffset)
         }
         
         profilePictureImageView.snp.makeConstraints {
-            $0.width.height.equalTo(120)
+            $0.width.height.equalTo(Metrics.profilePictureSize)
         }
         
         saveButton.snp.makeConstraints {
             $0.centerX.equalTo(self)
-            $0.bottom.equalTo(parentStackView).offset(88)
-            $0.width.equalTo(self).multipliedBy(0.4)
-            $0.height.equalTo(44)
+            $0.bottom.equalTo(parentStackView).offset(Metrics.saveButtonBottomOffset)
+            $0.width.equalTo(self).multipliedBy(Metrics.saveButtonWidthMult)
+            $0.height.equalTo(Metrics.saveButtonHeight)
         }
     }
     
@@ -191,7 +191,26 @@ final class DetailView: UIView {
 
 extension DetailView {
     enum Metrics {
+        static let parentStackViewTopOffset: CGFloat = 88
+        static let parentStackViewSpacing: CGFloat = 44
         
+        static let profilePictureSize: CGFloat = 120
+        
+        static let profileInfoStackViewSpacing: CGFloat = 32
+        
+        static let itemStackViewSpacing: CGFloat = 4
+        
+        static let topStackViewSpacing: CGFloat = 16
+        
+        static let iconImageSize: CGFloat = 44
+        static let descriptionTextFiledWidthMult: CGFloat = 0.8
+        static let descriptionTextFiledFontSize: CGFloat = 20
+        static let separatorHeight: CGFloat = 2
+        
+        static let saveButtonFontSize: CGFloat = 20
+        static let saveButtonBottomOffset: CGFloat = 88
+        static let saveButtonWidthMult: CGFloat = 0.4
+        static let saveButtonHeight: CGFloat = 44
     }
     
     enum Images {

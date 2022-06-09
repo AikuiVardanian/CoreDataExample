@@ -14,7 +14,7 @@ final class ListView: UIView {
     var viewAdapter = ListViewAdapter()
     
     lazy var tableView = UITableView(frame: .zero).then {
-        $0.register(ListTableViewCell.self, forCellReuseIdentifier: "Cell")
+        $0.register(ListTableViewCell.self, forCellReuseIdentifier: viewAdapter.identifier)
         $0.dataSource = viewAdapter
         $0.delegate = viewAdapter.self
     }

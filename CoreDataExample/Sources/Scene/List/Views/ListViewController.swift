@@ -11,6 +11,7 @@ import CoreData
 final class ListViewController: UIViewController {
     
     // MARK: - Properties
+    
     private lazy var contentView = ListView()
     var listViewPresenter: ListViewOutput?
     var viewAdapter: ListViewAdapter?

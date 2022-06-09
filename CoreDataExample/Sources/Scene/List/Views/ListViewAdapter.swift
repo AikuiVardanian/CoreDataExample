@@ -30,7 +30,7 @@ extension ListViewAdapter: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? ListTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? ListTableViewCell else { return UITableViewCell() }
         
         guard let profile = profiles[indexPath.row].value(forKey: "name") as? String else { return UITableViewCell() }
 
