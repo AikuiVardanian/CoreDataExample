@@ -20,21 +20,26 @@ final class DetailViewController: UIViewController {
         view = contentView
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        detailViewOutput?.reloadView()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        detailViewOutput?.reloadView()
+        detailViewOutput?.viewWasLoaded()
     }
 }
 
-// MARK: - Extension
+// MARK: - ViewInput
 
 extension DetailViewController: DetailViewInput {
     func update(with profile: Profile) {
         contentView.profile = profile
+        contentView.reloadView()
+    }
+}
+
+// MARK: - ViewDelegate
+
+extension DetailViewController: DetailViewDelegate {
+    func saveProfile() {
+        detailViewOutput?.updateProfileInDataBase()
     }
 }

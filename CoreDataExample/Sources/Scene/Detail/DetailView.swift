@@ -7,10 +7,14 @@
 
 import UIKit
 
+protocol DetailViewDelegate {
+    func saveProfile()
+}
+
 final class DetailView: UIView {
     
-    public var profile: Profile?
-    var presenter = DetailViewPresenter(viewInput: DetailViewController())
+    var profile: Profile?
+    var delegate: DetailViewDelegate?
     
     // MARK: - Properties
     private lazy var contentScrollView = UIScrollView().then {
@@ -33,9 +37,9 @@ final class DetailView: UIView {
         $0.spacing = 32
     }
     
-    lazy var nameStackView = createStackView(iconName: Images.person, description: profile?.name ?? "Name")
-    lazy var birthdayStackView = createStackView(iconName: Images.birthday, description: profile?.birthday ?? "Birthday")
-    lazy var genderStackView = createStackView(iconName: Images.person, description: profile?.gender ?? "Gender")
+    lazy var nameStackView = createStackView(iconName: Images.person, description: "Name")
+    lazy var birthdayStackView = createStackView(iconName: Images.birthday, description: "Birthday")
+    lazy var genderStackView = createStackView(iconName: Images.person, description: "Gender")
     
     private lazy var saveButton = UIButton().then {
         $0.setTitle("Save", for: .normal)
@@ -51,7 +55,6 @@ final class DetailView: UIView {
         let descriptionTextField = UITextField().then {
             $0.font = .systemFont(ofSize: 20)
             $0.placeholder = description
-            $0.text = description
         }
         
         let iconImageView = UIImageView().then {
@@ -152,8 +155,31 @@ final class DetailView: UIView {
         backgroundColor = .white
     }
     
-    @objc func saveProfile() {
+    func reloadView() {
+        if let topStackView = nameStackView.arrangedSubviews.first as? UIStackView,
+           let nameTextField = topStackView.arrangedSubviews.last as? UITextField,
+           let name = profile?.name {
+            
+            nameTextField.text = name
+        }
         
+        if let topStackView = birthdayStackView.arrangedSubviews.first as? UIStackView,
+           let birthdayTextField = topStackView.arrangedSubviews.last as? UITextField,
+           let birthday = profile?.birthday {
+            
+            birthdayTextField.text = birthday
+        }
+        
+        if let topStackView = genderStackView.arrangedSubviews.first as? UIStackView,
+           let genderTextField = topStackView.arrangedSubviews.last as? UITextField,
+           let gender = profile?.gender {
+            
+            genderTextField.text = gender
+        }
+    }
+    
+    @objc func saveProfile() {
+        delegate?.saveProfile()
     }
 }
 

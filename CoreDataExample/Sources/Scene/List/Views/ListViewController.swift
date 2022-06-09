@@ -73,7 +73,10 @@ extension ListViewController {
 extension ListViewController: ListViewInput {
     func openDetailView(for profile: Profile) {
         let detailViewController = DetailViewController()
-        detailViewController.detailViewOutput?.profile = profile
+        let detailViewPresenter = DetailViewPresenter(viewInput: detailViewController)
+        detailViewController.detailViewOutput = detailViewPresenter
+        
+        detailViewPresenter.profile = profile
 
         navigationController?.pushViewController(detailViewController, animated: true)
     }

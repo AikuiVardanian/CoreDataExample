@@ -8,6 +8,7 @@
 import Foundation
 
 class DetailViewPresenter: DetailViewOutput {    
+    
     private var viewInput: DetailViewInput?
     private var dataProvider: CoreDataProvider?
     
@@ -18,17 +19,12 @@ class DetailViewPresenter: DetailViewOutput {
         dataProvider = CoreDataProvider()
     }
     
-    func setViewInput(viewInput: DetailViewInput?) {
-        self.viewInput = viewInput
-    }
-    
-    func reloadView() {
+    func viewWasLoaded() {
         guard let profile = profile else { return }
-
         viewInput?.update(with: profile)
     }
     
-    func updateProfile() {
+    func updateProfileInDataBase() {
         guard let profile = profile, let viewInput = viewInput as? DetailViewController else { return }
         
         profile.name = viewInput.contentView.nameStackView.layer.name

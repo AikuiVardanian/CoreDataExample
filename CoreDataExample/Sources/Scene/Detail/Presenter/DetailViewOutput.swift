@@ -8,8 +8,6 @@
 import Foundation
 
 protocol DetailViewOutput {
-    var profile: Profile? { get set }
-    
-    func reloadView()
-    func updateProfile()
+    func viewWasLoaded()
+    func updateProfileInDataBase()
 }
